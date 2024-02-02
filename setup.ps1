@@ -11,7 +11,7 @@ msiexec /i OpenJDK21.msi ADDLOCAL=FeatureMain,FeatureEnvironment,FeatureJarFileR
 
 echo "Extracting + adding custom config to \.minecraft..."
 
-Expand-Archive "$pwd\fast-pack.zip" -DestinationPath "$pwd\fast-pack"
+Expand-Archive "$pwd\fast-pack.zip" -DestinationPath "$pwd"
 
 $accountContent = Get-Content -Path "$pwd\fast-pack\sklauncher\accounts.json" -Raw
 
