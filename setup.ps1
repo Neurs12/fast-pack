@@ -9,11 +9,11 @@ echo "Downloading required resources..."
 echo "Installing JRE..."
 msiexec /i OpenJDK21.msi ADDLOCAL=FeatureMain,FeatureEnvironment,FeatureJarFileRunWith,FeatureJavaHome,FeatureOracleJavaSoft INSTALLDIR="$pwd\jre" /quiet | Out-Null
 
-echo "Extracting + adding custom config to \.minecraft..."
+echo "Applying custom config..."
 
 Expand-Archive "$pwd\fast-pack.zip" -DestinationPath "$pwd"
 
-$accountContent = Get-Content -Path "$pwd\fast-pack\sklauncher\accounts.json" -Raw
+$accountContent = Get-Content -Path "$pwd\fast-pack\SKLauncher\accounts.json" -Raw
 
 $accountContent = $accountContent -creplace "#USERNAME", $username
 $accountContent = $accountContent -creplace "#UUID", $uuid
@@ -27,3 +27,6 @@ if (Test-Path -Path "$env:APPDATA\.minecraft") {
     New-Item -Path "$env:APPDATA\.minecraft" -ItemType Directory -Force
     Copy-Item -Path "$pwd\fast-pack\*" -Destination "$env:APPDATA\.minecraft" -Recurse -Force
 }
+
+echo "Launching SKLauncher..."
+."$pwd\SKLauncher.exe"
