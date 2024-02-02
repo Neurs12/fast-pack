@@ -13,7 +13,7 @@ echo "Extracting + adding custom config to \.minecraft..."
 
 Expand-Archive "$pwd\fast-pack.zip" -DestinationPath "$pwd\fast-pack"
 
-$accountContent = Get-Content -Path "$pwd\fast-pack\SKLauncher\accounts.json" -Raw
+$accountContent = Get-Content -Path "$pwd\fast-pack\sklauncher\accounts.json" -Raw
 
 $accountContent = $accountContent -creplace "#USERNAME", $username
 $accountContent = $accountContent -creplace "#UUID", $uuid
@@ -27,6 +27,3 @@ if (Test-Path -Path "$env:APPDATA\.minecraft") {
     New-Item -Path "$env:APPDATA\.minecraft" -ItemType Directory -Force
     Copy-Item -Path "$pwd\fast-pack\*" -Destination "$env:APPDATA\.minecraft" -Recurse -Force
 }
-
-echo "Launching SKLauncher..."
-."$pwd\SKLauncher"
