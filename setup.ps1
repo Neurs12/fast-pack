@@ -4,7 +4,7 @@ echo "Downloading required resources..."
 (New-Object Net.WebClient).DownloadFile("https://github.com/Neurs12/fast-pack/raw/main/fast-pack.zip", "$pwd\fast-pack.zip")
 
 echo "Installing JRE..."
-msiexec /i OpenJDK17.msi ADDLOCAL=FeatureMain,FeatureEnvironment,FeatureJarFileRunWith,FeatureJavaHome INSTALLDIR="$pwd\jre" /quiet
+msiexec /i OpenJDK17.msi ADDLOCAL=FeatureMain,FeatureEnvironment,FeatureJarFileRunWith,FeatureJavaHome INSTALLDIR="$pwd\jre" /quiet | Out-Null
 
 echo "Extracting + adding custom packages to \.minecraft..."
 
@@ -17,4 +17,4 @@ if (Test-Path -Path "$env:APPDATA\.minecraft") {
 }
 
 echo "Launching SKLauncher..."
-.\$pwd\jre\bin\java.exe -jar "$pwd\SKLauncher.exe"
+.\$pwd\jre\bin\java.exe -jar "$pwd\SKLauncher.jar"
