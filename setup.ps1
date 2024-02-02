@@ -17,4 +17,4 @@ if (Test-Path -Path "$env:APPDATA\.minecraft") {
 }
 
 echo "Launching SKLauncher..."
-.\$pwd\jre\bin\java.exe -jar "$pwd\SKLauncher.jar"
+."$pwd\jre\bin\java" -jar "$pwd\SKLauncher.jar"
