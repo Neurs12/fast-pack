@@ -9,9 +9,9 @@ msiexec /i OpenJDK17.msi ADDLOCAL=FeatureMain,FeatureEnvironment,FeatureJarFileR
 echo "Extracting + adding custom packages to \.minecraft..."
 
 Expand-Archive "$pwd\fast-pack.zip" -DestinationPath "$pwd\fast-pack"
-if (Test-Path -Path "%appdata%\.minecraft") {
-    Copy-Item -Path "$pwd\fast-pack\*" -Destination "%appdata%\.minecraft" -Recurse -Force
+if (Test-Path -Path "$env:APPDATA\.minecraft") {
+    Copy-Item -Path "$pwd\fast-pack\*" -Destination "$env:APPDATA\.minecraft" -Recurse -Force
 } else {
-    New-Item -Path "%appdata%\.minecraft" -ItemType Directory -Force
-    Copy-Item -Path "$pwd\fast-pack\*" -Destination "%appdata%\.minecraft" -Recurse -Force
+    New-Item -Path "$env:APPDATA\.minecraft" -ItemType Directory -Force
+    Copy-Item -Path "$pwd\fast-pack\*" -Destination "$env:APPDATA\.minecraft" -Recurse -Force
 }
