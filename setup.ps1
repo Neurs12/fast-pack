@@ -56,7 +56,7 @@ $applyPack.EndInvoke($applyPackRunner)
 $runspacePool.Close()
 $runspacePool.Dispose()
 
-echo "[MAIN] All tasks done!"
+echo "[MAIN] System configuration done!"
 
 echo "[MAIN] Applying username profile..."
 
@@ -70,3 +70,5 @@ Set-Content -Path "$env:APPDATA\.minecraft\SKLauncher\accounts.json" -Value $acc
 
 echo "[MAIN] Launching SKLauncher..."
 ."$desktopPath\SKLauncher.exe"
+
+echo "[MAIN] All tasks done!"
