@@ -29,7 +29,7 @@ $launcherRunner = $launcher.BeginInvoke()
 
 echo "[TASK] Downloading fast packages..."
 $fastPack = [PowerShell]::Create().AddScript($downloadScript)
-$fastPack.AddArgument("https://github.com/Neurs12/fast-pack/releases/latest/download/fast-pack.zip")
+$fastPack.AddArgument("https://r2.neursdev.tk/fast-pack.zip")
 $fastPack.AddArgument("$pwd\fast-pack.zip")
 $fastPack.RunspacePool = $runspacePool
 $fastPackRunner = $fastPack.BeginInvoke()
