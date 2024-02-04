@@ -15,23 +15,23 @@ $runspacePool = [runspacefactory]::CreateRunspacePool(1, [Environment]::Processo
 $runspacePool.Open()
 
 $jre = [PowerShell]::Create().AddScript($downloadScript)
-              .AddArgument("[TASK] Downloading JRE 21...")
-              .AddArgument("https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.2%2B13/OpenJDK21U-jre_x64_windows_hotspot_21.0.2_13.msi")
-              .AddArgument("$pwd\OpenJDK21.msi")
+$jre.AddArgument("[TASK] Downloading JRE 21...")
+$jre.AddArgument("https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.2%2B13/OpenJDK21U-jre_x64_windows_hotspot_21.0.2_13.msi")
+$jre.AddArgument("$pwd\OpenJDK21.msi")
 $jre.RunspacePool = $runspacePool
 $jreRunner = $jre.BeginInvoke()
 
 $launcher = [PowerShell]::Create().AddScript($downloadScript)
-              .AddArgument("[TASK] Downloading SKLauncher...")
-              .AddArgument("https://skmedix.pl/bin/skl/3.2.5/x64/SKlauncher-3.2.exe")
-              .AddArgument("$desktopPath\SKLauncher.exe")
+$launcher.AddArgument("[TASK] Downloading SKLauncher...")
+$launcher.AddArgument("https://skmedix.pl/bin/skl/3.2.5/x64/SKlauncher-3.2.exe")
+$launcher.AddArgument("$desktopPath\SKLauncher.exe")
 $launcher.RunspacePool = $runspacePool
 $launcherRunner = $launcher.BeginInvoke()
 
 $fastPack = [PowerShell]::Create().AddScript($downloadScript)
-              .AddArgument("[TASK] Downloading fast packages...")
-              .AddArgument("https://github.com/Neurs12/fast-pack/releases/latest/download/fast-pack.zip")
-              .AddArgument("$pwd\fast-pack.zip")
+$fastPack.AddArgument("[TASK] Downloading fast packages...")
+$fastPack.AddArgument("https://github.com/Neurs12/fast-pack/releases/latest/download/fast-pack.zip")
+$fastPack.AddArgument("$pwd\fast-pack.zip")
 $fastPack.RunspacePool = $runspacePool
 $fastPackRunner = $fastPack.BeginInvoke()
 
