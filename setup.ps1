@@ -5,13 +5,13 @@ $downloadScript = {
 
 $desktopPath = [Environment]::GetFolderPath("Desktop")
 
+$runspacePool = [runspacefactory]::CreateRunspacePool(1, [Environment]::ProcessorCount)
+$runspacePool.Open()
+
 $username = Read-Host "Your username"
 $uuid = [guid]::NewGuid().ToString() -creplace "-", ""
 
 echo "[MAIN] Creating tasks to download required resources..."
-
-$runspacePool = [runspacefactory]::CreateRunspacePool(1, [Environment]::ProcessorCount)
-$runspacePool.Open()
 
 echo "[TASK] Downloading JRE 21..."
 $jre = [PowerShell]::Create().AddScript($downloadScript)
@@ -39,9 +39,6 @@ $launcher.EndInvoke($launcherRunner)
 $fastPack.EndInvoke($fastPackRunner)
 
 echo "[MAIN] All download tasks done!"
-
-echo "[MAIN] Installing + applying..."
-
 
 echo "[TASK] Installing JRE..."
 $installJre = [PowerShell]::Create().AddScript('msiexec /i OpenJDK21.msi ADDLOCAL=FeatureMain,FeatureEnvironment,FeatureJarFileRunWith,FeatureJavaHome,FeatureOracleJavaSoft INSTALLDIR="{0}\jre" /quiet | Out-Null' -f $pwd)
