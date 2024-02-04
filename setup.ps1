@@ -44,14 +44,12 @@ echo "[MAIN] Installing + applying..."
 
 
 echo "[TASK] Installing JRE..."
-$installJre = [PowerShell]::Create().AddCommand("msiexec")
-$installJre.AddArguments("/i", "OpenJDK21.msi", "ADDLOCAL=FeatureMain,FeatureEnvironment,FeatureJarFileRunWith,FeatureJavaHome,FeatureOracleJavaSoft", "INSTALLDIR=`"$($pwd.Path)\jre`"", "/quiet")
+$installJre = [PowerShell]::Create().AddScript('msiexec /i OpenJDK21.msi ADDLOCAL=FeatureMain,FeatureEnvironment,FeatureJarFileRunWith,FeatureJavaHome,FeatureOracleJavaSoft INSTALLDIR="{0}\jre" /quiet | Out-Null' -f $pwd)
 $installJre.RunspacePool = $runspacePool
 $installJreRunner = $installJre.BeginInvoke()
 
 echo "[TASK] Extracting config..."
-$applyPack = [PowerShell]::Create().AddCommand("Expand-Archive")
-$applyPack.AddArguments("$($pwd.Path)\fast-pack.zip", "-DestinationPath", "$env:APPDATA\.minecraft")
+$applyPack = [PowerShell]::Create().AddScript('Expand-Archive "{0}\fast-pack.zip" -DestinationPath "$env:APPDATA\.minecraft"' -f $pwd)
 $applyPack.RunspacePool = $runspacePool
 $applyPackRunner = $applyPack.BeginInvoke()
 
