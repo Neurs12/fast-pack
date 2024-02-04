@@ -38,16 +38,32 @@ $jre.EndInvoke($jreRunner)
 $launcher.EndInvoke($launcherRunner)
 $fastPack.EndInvoke($fastPackRunner)
 
-echo "[MAIN] All tasks done!"
+echo "[MAIN] All download tasks done!"
+
+echo "[MAIN] Installing + applying..."
+
+
+echo "[TASK] Installing JRE..."
+$installJre = [PowerShell]::Create().AddCommand("msiexec")
+$installJre.AddArguments("/i", "OpenJDK21.msi", "ADDLOCAL=FeatureMain,FeatureEnvironment,FeatureJarFileRunWith,FeatureJavaHome,FeatureOracleJavaSoft", "INSTALLDIR=`"$($pwd.Path)\jre`"", "/quiet")
+$installJre.RunspacePool = $runspacePool
+$installJreRunner = $installJre.BeginInvoke()
+
+echo "[TASK] Extracting config..."
+$applyPack = [PowerShell]::Create().AddCommand("Expand-Archive")
+$applyPack.AddArguments("$($pwd.Path)\fast-pack.zip", "-DestinationPath", "$env:APPDATA\.minecraft")
+$applyPack.RunspacePool = $runspacePool
+$applyPackRunner = $applyPack.BeginInvoke()
+
+$installJre.EndInvoke($installJreRunner)
+$applyPack.EndInvoke($applyPackRunner)
+
 $runspacePool.Close()
 $runspacePool.Dispose()
 
-echo "[MAIN] Installing JRE..."
-msiexec /i OpenJDK21.msi ADDLOCAL=FeatureMain,FeatureEnvironment,FeatureJarFileRunWith,FeatureJavaHome,FeatureOracleJavaSoft INSTALLDIR="$pwd\jre" /quiet | Out-Null
+echo "[MAIN] All tasks done!"
 
-echo "[MAIN] Applying custom config..."
-
-Expand-Archive "$pwd\fast-pack.zip" -DestinationPath "$env:APPDATA\.minecraft"
+echo "[MAIN] Applying username profile..."
 
 $accountContent = Get-Content -Path "$env:APPDATA\.minecraft\SKLauncher\accounts.json" -Raw
 
