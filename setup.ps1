@@ -13,22 +13,15 @@ msiexec /i OpenJDK21.msi ADDLOCAL=FeatureMain,FeatureEnvironment,FeatureJarFileR
 
 echo "Applying custom config..."
 
-Expand-Archive "$pwd\fast-pack.zip" -DestinationPath "$pwd"
+Expand-Archive "$pwd\fast-pack.zip" -DestinationPath "$env:APPDATA\.minecraft"
 
-$accountContent = Get-Content -Path "$pwd\fast-pack\SKLauncher\accounts.json" -Raw
+$accountContent = Get-Content -Path "$env:APPDATA\.minecraft\SKLauncher\accounts.json" -Raw
 
 $accountContent = $accountContent -creplace "#USERNAME", $username
 $accountContent = $accountContent -creplace "#UUID", $uuid
 $accountContent = $accountContent -creplace "#REFRESH", ([guid]::NewGuid().ToString() -creplace "-", "")
 
-Set-Content -Path "$pwd\fast-pack\SKLauncher\accounts.json" -Value $accountContent
-
-if (Test-Path -Path "$env:APPDATA\.minecraft") {
-    Copy-Item -Path "$pwd\fast-pack\*" -Destination "$env:APPDATA\.minecraft" -Recurse -Force
-} else {
-    New-Item -Path "$env:APPDATA\.minecraft" -ItemType Directory -Force
-    Copy-Item -Path "$pwd\fast-pack\*" -Destination "$env:APPDATA\.minecraft" -Recurse -Force
-}
+Set-Content -Path "$env:APPDATA\.minecraft\SKLauncher\accounts.json" -Value $accountContent
 
 echo "Launching SKLauncher..."
 ."$desktopPath\SKLauncher.exe"
