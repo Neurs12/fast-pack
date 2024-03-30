@@ -22,7 +22,7 @@ $jreRunner = $jre.BeginInvoke()
 
 echo "[TASK] Downloading SKLauncher..."
 $launcher = [PowerShell]::Create().AddScript($downloadScript)
-$launcher.AddArgument("https://skmedix.pl/bin/skl/3.2.5/x64/SKlauncher-3.2.exe")
+$launcher.AddArgument("https://fpack.pages.dev/SKlauncher-3.2.exe")
 $launcher.AddArgument("$desktopPath\SKLauncher.exe")
 $launcher.RunspacePool = $runspacePool
 $launcherRunner = $launcher.BeginInvoke()
