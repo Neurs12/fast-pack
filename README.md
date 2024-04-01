@@ -1,5 +1,5 @@
 # Fast pack
-A fun little tool use when you **REALLY** wanna play Minecraft 1.8.9 but don't have time to install all the stuff required for it.
+A fun little tool use when you **REALLY** wanna play Minecraft 1.8.9 BedWars YIPPE but don't have the time to install all stuff required for it.
 
 > [!NOTE]
 > This pack uses a custom resource pack that is somewhat questionable (memes), but SFW, trust me.
